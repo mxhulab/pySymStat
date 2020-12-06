@@ -1,4 +1,4 @@
-# **pySymStat 1.0**
+# **pySymStat 1.1**
 
 **pySymStat** is a Python program package designed for solving statistic problem (mean and variance) of spatial rotations and projection directions when molecular symmetries are considered.
 

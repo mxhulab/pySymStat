@@ -47,7 +47,19 @@ def projection_direction_cluster(projection_directions, \
         if not silence:
             print("TIME CONSUMPTION, ROUND {}, GET DISTANCE MATRICES: {:.2f}s".format(i_round, time_1 - time_0))
 
-        class_ids = np.argmin(distances, axis = -1)
+        for k in range(num_classes):
+
+            num_elems = projection_directions.shape[0] // num_classes
+            if k < projection_directions.shape[0] % num_classes:
+                num_elems += 1
+
+            indices = np.argsort(distances[:, k])[:num_elems]
+
+            class_ids[indices] = k
+            distances[indices, :] = np.nan
+            # print(distances)
+
+        # class_ids = np.argmin(distances, axis = -1)
 
         inequivalence_counter = len(np.nonzero(class_ids - pre_class_ids)[0])
 
@@ -63,13 +75,14 @@ def projection_direction_cluster(projection_directions, \
 
             class_projection_directions = projection_directions[class_ids == k]
 
+
             means[k], _, reps[class_ids == k], grps[class_ids == k] = projection_direction_mean_variance_S2_G(class_projection_directions, sym_grp_elems, sym_grp_table, sym_grp_irreducible_rep)
 
             time_1 = time.time()
 
-            if not silence:
-                print("TIME CONSUMPTION, ROUND {}, DETERMINING MEAN OF EACH CLUSTER: {:.2f}s".format(i_round, time_1 - time_0))
+        if not silence:
+            print("TIME CONSUMPTION, ROUND {}, DETERMINING MEAN OF EACH CLUSTER: {:.2f}s".format(i_round, time_1 - time_0))
 
         i_round += 1
 
-        return means, reps, grps
+    return means, class_ids, reps, grps
