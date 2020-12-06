@@ -54,10 +54,11 @@ def mean_variance_sym_grp(sr_or_pd, \
 
     # determine representative_solved and sym_grp_elems_solved_selected_for_NUG
 
-    dst = np.apply_along_axis(lambda q: distance_sr_or_pd_G(q, mean, sym_grp_elems), -1, sr_or_pd)
+    representative_solved = np.empty(sr_or_pd.shape, dtype = np.float64)
+    sym_grp_elems_solved = np.empty((sr_or_pd.shape[0], 4), dtype = np.float64)
 
-    representative_solved = dst[:, 1]
-    sym_grp_elems_solved = dst[:, 2]
+    for i in range(sr_or_pd.shape[0]):
+        _, representative_solved[i], sym_grp_elems_solved[i] = distance_sr_or_pd_G(sr_or_pd[i], mean, sym_grp_elems)
 
     # calculate variance
 
