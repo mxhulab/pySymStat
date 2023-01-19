@@ -26,8 +26,7 @@ def convert_SDP_solutions_to_convex_combination(f, X, grp_irreducible_rep, num_e
         for k in range(num_irreducible_reps):
             Y[i, j, g] += d[k] * np.trace(grp_irreducible_rep[k, g].conj().transpose() @
                                           X[k][i * d[k] : (i + 1) * d[k], j * d[k] : (j + 1) * d[k]])
-    
-    Y[i, j, g] /= num_elems_grp
+        Y[i, j, g] /= num_elems_grp
 
     if not is_all_real:
         Y = Y.real

@@ -78,7 +78,7 @@ def projection_direction_cluster(projection_directions, \
 
             means[k], _, reps[class_ids == k], grps[class_ids == k] = projection_direction_mean_variance_S2_G(class_projection_directions, sym_grp_elems, sym_grp_table, sym_grp_irreducible_rep)
 
-            time_1 = time.time()
+        time_1 = time.time()
 
         if not silence:
             print("TIME CONSUMPTION, ROUND {}, DETERMINING MEAN OF EACH CLUSTER: {:.2f}s".format(i_round, time_1 - time_0))
