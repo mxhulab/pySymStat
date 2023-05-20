@@ -13,7 +13,11 @@ def get_sym_grp(sym : str):
     parameters
     ==========
     sym : str
-        'Cn' | 'Dn' | 'T' | 'O' | 'I'
+        'Cn' | 'Dn' | 'T' | 'O' | 'I' (= 'I2') |
+        'I1' | 'I2' | 'I3'
+
+        'In' is the convention adopted by Relion, see
+        https://relion.readthedocs.io/en/release-3.1/Reference/Conventions.html#symmetry
 
     returns
     =======
@@ -30,9 +34,9 @@ def get_sym_grp(sym : str):
         sym_grp_elems = get_sym_grp_Dn_elems(n)
         sym_grp_irreps = get_sym_grp_Dn_irreps(n)
 
-    elif sym[0] in ['T', 'O', 'I']:
-        sym_grp_elems, sym_grp_elems_ab = get_sym_grp_TOI_elems(sym[0])
-        sym_grp_irreps = get_sym_grp_TOI_irreps(sym[0], sym_grp_elems_ab)
+    elif sym in ['T', 'O', 'I', 'I1', 'I2', 'I3']:
+        sym_grp_elems, sym_grp_elems_ab = get_sym_grp_TOI_elems(sym)
+        sym_grp_irreps = get_sym_grp_TOI_irreps(sym, sym_grp_elems_ab)
 
     else:
         raise ValueError('Invalid argument.')
@@ -85,11 +89,14 @@ def pretty_print(sym_grp_info):
 
 if __name__ == '__main__':
     pretty_print(get_sym_grp('C1'))
-    pretty_print(get_sym_grp('C3'))
-    pretty_print(get_sym_grp('C4'))
-    pretty_print(get_sym_grp('D1'))
-    pretty_print(get_sym_grp('D3'))
-    pretty_print(get_sym_grp('D4'))
-    pretty_print(get_sym_grp('T'))
-    pretty_print(get_sym_grp('O'))
-    pretty_print(get_sym_grp('I'))
+    # pretty_print(get_sym_grp('C3'))
+    # pretty_print(get_sym_grp('C4'))
+    # pretty_print(get_sym_grp('D1'))
+    # pretty_print(get_sym_grp('D3'))
+    # pretty_print(get_sym_grp('D4'))
+    # pretty_print(get_sym_grp('T'))
+    # pretty_print(get_sym_grp('O'))
+    # pretty_print(get_sym_grp('I'))
+    # pretty_print(get_sym_grp('I1'))
+    # pretty_print(get_sym_grp('I2'))
+    # pretty_print(get_sym_grp('I3'))

@@ -22,9 +22,15 @@ def get_sym_grp_TOI_elems(sym):
     elif sym == 'O':
         qa = np.array([sqrt(2) / 2,   0,   0, sqrt(2) / 2], dtype = np.float64)
         qb = np.array([        0.5, 0.5, 0.5,         0.5], dtype = np.float64)
-    elif sym == 'I':
+    elif sym == 'I' or sym == 'I2':
+        qa = np.array([0,   1,                 0,                 0], dtype = np.float64)
+        qb = np.array([0.5, (sqrt(5) + 1) / 4, (sqrt(5) - 1) / 4, 0], dtype = np.float64)
+    elif sym == 'I1':
         qa = np.array([0,   0,                 0,                 1], dtype = np.float64)
         qb = np.array([0.5, 0, (sqrt(5) - 1) / 4, (sqrt(5) + 1) / 4], dtype = np.float64)
+    elif sym == 'I3':
+        qa = np.array([0, -0.5257311143, 0, 0.8506508070], dtype = np.float64)
+        qb = np.array([0.5, -0.4253254082243262, 0.30901699437494745, 0.6881909629065621], dtype = np.float64)
 
     elems = []
     elems_ab = []
@@ -68,7 +74,7 @@ def get_sym_grp_TOI_irreps(sym, elems_ab):
                    np.array([[0, 1, 0], [-1, -1, -1], [0, 0, 1]], dtype = np.float64)),
                   (np.array([[1, 1, 1], [-1, 0, 0], [0, -1, 0]], dtype = np.float64),
                    np.array([[0, 1, 0], [-1, -1, -1], [0, 0, 1]], dtype = np.float64))]
-    elif sym == 'I':
+    elif sym[0] == 'I':
         k = 5
         n = 60
         x3 = ( sqrt(5) - 1) / 2
