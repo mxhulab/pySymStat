@@ -8,7 +8,7 @@ from itertools import combinations
 from .symmetry_group import get_sym_grp
 from .distance import distance_SO3, distance_S2
 from .quaternion import quat_mult, quat_conj, quat_rotate
-from .nug import solve_NUG
+from .NUG import solve_NUG
 
 def mean_SO3(quats, type = 'arithmetic'):
     '''
