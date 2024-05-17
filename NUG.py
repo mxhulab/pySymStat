@@ -5,7 +5,7 @@ __all__ = [
 import numpy as np
 import picos as pic
 from itertools import combinations
-from .leaderboard import Leaderboard
+from .Leaderboard import Leaderboard
 from .Partial_Solution import Partial_Solution
 
 def solve_NUG(f, grp_table, grp_irreps, leaderboard_capacity = 20, ignore_threshold = 0.99, original_rounding = False, verbosity = 0):

@@ -7,4 +7,4 @@ __all__ = [
 
 from .symmetry_group import get_sym_grp
 from .meanvar import meanvar_SO3_G, meanvar_S2_G
-from .nug import solve_NUG
+from .NUG import solve_NUG
