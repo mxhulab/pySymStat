@@ -61,10 +61,12 @@ Here `vecs` is a $n$ by $3$ numpy array, and $i$-th projection direction $vecs[i
 
 # Function List
 
+# Function List
+
 ## `distance.distance_SO3`
 ```
 distance_SO3(q1, q2, type='arithmetic')
     q1, q2 : unit quaternion representation of spatial rotations.
     type : 'arithmetic' | 'geometric'.
 ```
-## 
+## `distance.distance_S2`
