@@ -1,8 +1,49 @@
-# **pySymStat 1.0**
+# **pySymStat Overivew**
 
-**pySymStat** is a Python program package designed for solving statistic problem (mean and variance) of spatial rotations and projection directions when molecular symmetries are considered.
+pySymStat is a Python software package designed to average orientations, including both spatial rotations and projection directions, while accounting for molecular symmetry.
 
-This program package implements algorithm proposed in the paper "*The Moments of Orientation Estimations Considering Molecular Symmetry in Cryo-EM*", written by Qi ZHANG, Chenlong BAO, Hai LIN, Mingxu HU. Users may consult our paper for more details.
+# Publications
+
+This program package implements algorithm proposed in the paper [The Moments of Orientation Estimations Considering Molecular Symmetry in Cryo-EM](https://arxiv.org/abs/2301.05426).
+
+# Installation
+
+CryoSieve is an open-source software, developed using Python. Please access our source code on [GitHub](https://github.com/mxhulab/pySymStat).
+
+## Preparation of Conda Environment
+
+Prepare a conda environment with the following commands
+```
+conda create -n PYSYMSTAT_ENV python=3.10
+```
+and activate this conda environemnt via
+```
+conda activate PYSYMSTAT_ENV
+```
+
+## Installing Dependencies
+
+Install Numpy and PICOS by executing the following command with Pip:
+```
+pip install numpy picos
+```
+
+## Installing pySymStat
+
+Clone the Github repository of [pySymStat](https://github.com/mxhulab/pySymStat).
+
+## Verifying Installation
+
+Open your Python environment, and execute the following command to import the `pySymStat` package:
+```
+import pySymStat
+```
+Then, list all functions, classes, and modules included in `pySymStat` by running:
+```
+print(dir(pySymStat))
+```
+
+# Tutorial
 
 We provide a demo program `demo/demo.py` which shows how to use our package for solving these two problems. As an example, we present how to solve mean and variance of spatial rotations.
 
