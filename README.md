@@ -65,8 +65,9 @@ Here `vecs` is a $n$ by $3$ numpy array, and $i$-th projection direction $vecs[i
 
 ## `distance.distance_SO3`
 ```
-distance_SO3(q1, q2, type='arithmetic')
-    q1, q2 : unit quaternion representation of spatial rotations.
+distance_SO3(q1: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]], q2: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]], type=typing.Literal['arithmetic', 'geometric']) -> float
+    q1, q2 : unit quaternion representation of spatial rotations, Numpy vector of np.float64 of length 4.
     type : 'arithmetic' | 'geometric'.
 ```
+
 ## `distance.distance_S2`
