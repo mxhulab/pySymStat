@@ -58,3 +58,13 @@ Similarly, one can call the function `projection_direction_mean_variance_S2_G` f
     mean, variance, representatives, solutions = meanvar_S2_G(vecs, sym_grp, type = 'arithmetic')
 ```
 Here `vecs` is a $n$ by $3$ numpy array, and $i$-th projection direction $vecs[i, :]$ is a unit 3-vector.
+
+# Function List
+
+## `distance.distance_SO3`
+```
+distance_SO3(q1, q2, type='arithmetic')
+    q1, q2 : unit quaternion representation of spatial rotations.
+    type : 'arithmetic' | 'geometric'.
+```
+## 
