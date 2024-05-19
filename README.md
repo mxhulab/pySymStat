@@ -65,9 +65,11 @@ Here `vecs` is a $n$ by $3$ numpy array, and $i$-th projection direction $vecs[i
 
 ## `distance.distance_SO3`
 ```
-distance_SO3(q1: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]], q2: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]], type=typing.Literal['arithmetic', 'geometric']) -> float
-    q1, q2 : unit quaternion representation of spatial rotations, Numpy vector of np.float64 of length 4.
-    type : 'arithmetic' | 'geometric'.
+distance_SO3(q1: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]], q2: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]], type: Literal['arithmetic', 'geometric'] = 'arithmetic') -> float
+    The `distance_SO3` function calculates either the arithmetic or geometric distance between two spatial rotations.
+    - `q1`, `q2`: These are the unit quaternion representations of spatial rotations, each a Numpy vector of type `np.float64` with a length of 4.
+    - `type`: Specifies the type of distance calculation. Options are 'arithmetic' or 'geometric'.
 ```
+[source](distance.py) [demo](demo/demo_distance_SO3.py)
 
 ## `distance.distance_S2`
