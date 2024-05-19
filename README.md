@@ -61,8 +61,6 @@ Here `vecs` is a $n$ by $3$ numpy array, and $i$-th projection direction $vecs[i
 
 # Function List
 
-# Function List
-
 ## `distance.distance_SO3`
 ```
 distance_SO3(q1: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]], q2: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]], type: Literal['arithmetic', 'geometric'] = 'arithmetic') -> float
@@ -73,3 +71,10 @@ distance_SO3(q1: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]], q2: nump
 [source](distance.py) [demo](demo/demo_distance_SO3.py)
 
 ## `distance.distance_S2`
+```
+distance_S2(v1: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]], v2: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]], type: Literal['arithmetic', 'geometric'] = 'arithmetic') -> float
+    The `distance_S2` function calculates either the arithmetic or geometric distance between two projection directions.
+    - `v1`, `v2`: These are the unit vectors representing projection directions, each a Numpy vector of type `np.float64` with a length of 3.
+    - `type`: Specifies the type of distance calculation. Options are 'arithmetic' or 'geometric'.
+```
+[source](distance.py) [demo](demo/demo_distance_S2.py)
