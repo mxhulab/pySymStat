@@ -18,11 +18,13 @@ def stable_sqrt(x):
 
 def distance_SO3(q1 : NDArray[np.float64], \
                  q2 : NDArray[np.float64], \
-                 type = Literal['arithmetic', 'geometric']) -> float:
+                 type : Literal['arithmetic', 'geometric'] = 'arithmetic') -> float:
     '''
-    q1, q2 : unit quaternion representation of spatial rotations, Numpy vector of np.float64 of length 4.
-    type : 'arithmetic' | 'geometric'.
+    The `distance_SO3` function calculates either the arithmetic or geometric distance between two spatial rotations.
+    - `q1`, `q2`: These are the unit quaternion representations of spatial rotations, each a Numpy vector of type `np.float64` with a length of 4.
+    - `type`: Specifies the type of distance calculation. Options are 'arithmetic' or 'geometric'.
     '''
+
     if type == 'arithmetic':
         return 2 * stable_sqrt(2 * (1 - np.dot(q1, q2) ** 2))
     elif type == 'geometric':
