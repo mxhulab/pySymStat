@@ -8,22 +8,12 @@ from .symmetry_group_Cn import get_sym_grp_Cn_elems, get_sym_grp_Cn_irreps
 from .symmetry_group_Dn import get_sym_grp_Dn_elems, get_sym_grp_Dn_irreps
 from .symmetry_group_TOI import get_sym_grp_TOI_elems, get_sym_grp_TOI_irreps
 
-def get_sym_grp(sym : str):
+def get_sym_grp(sym):
     '''
-    parameters
-    ==========
-    sym : str
-        'Cn' | 'Dn' | 'T' | 'O' | 'I' (= 'I2') |
-        'I1' | 'I2' | 'I3'
-
-        'In' is the convention adopted by Relion, see
-        https://relion.readthedocs.io/en/release-3.1/Reference/Conventions.html#symmetry
-
-    returns
-    =======
-    (sym_grp_elems, sym_grp_table, sym_grp_irreps)
-        See doc for details.
+    The `get_sym_grp` function retrieves the elements, the Cayley table, and the irreducible representations for a specified molecular symmetry symbol.
+    - `sym`: The molecular symmetry symbol. Acceptable inputs include `Cn`, `Dn`, `T`, `O`, `I`, `I1`, `I2`, `I3`. The symbols `I`, `I1`, `I2`, `I3` all denote icosahedral symmetry, but with different conventions. Notably, `I` is equivalent to `I2`. This convention is used in Relion. For more details, visit [Relion Conventions](https://relion.readthedocs.io/en/release-3.1/Reference/Conventions.html#symmetry).
     '''
+
     if sym[0] == 'C':
         n = int(sym[1:])
         sym_grp_elems = get_sym_grp_Cn_elems(n)
@@ -89,14 +79,14 @@ def pretty_print(sym_grp_info):
 
 if __name__ == '__main__':
     pretty_print(get_sym_grp('C1'))
-    # pretty_print(get_sym_grp('C3'))
-    # pretty_print(get_sym_grp('C4'))
-    # pretty_print(get_sym_grp('D1'))
-    # pretty_print(get_sym_grp('D3'))
-    # pretty_print(get_sym_grp('D4'))
-    # pretty_print(get_sym_grp('T'))
-    # pretty_print(get_sym_grp('O'))
-    # pretty_print(get_sym_grp('I'))
-    # pretty_print(get_sym_grp('I1'))
-    # pretty_print(get_sym_grp('I2'))
-    # pretty_print(get_sym_grp('I3'))
+    pretty_print(get_sym_grp('C3'))
+    pretty_print(get_sym_grp('C4'))
+    pretty_print(get_sym_grp('D1'))
+    pretty_print(get_sym_grp('D3'))
+    pretty_print(get_sym_grp('D4'))
+    pretty_print(get_sym_grp('T'))
+    pretty_print(get_sym_grp('O'))
+    pretty_print(get_sym_grp('I'))
+    pretty_print(get_sym_grp('I1'))
+    pretty_print(get_sym_grp('I2'))
+    pretty_print(get_sym_grp('I3'))
