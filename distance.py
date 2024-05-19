@@ -7,15 +7,20 @@ import numpy as np
 from math import pi, sin, cos, acos, sqrt, isclose
 from .quaternion import *
 
+from numpy.typing import NDArray
+from typing import Literal
+
 def stable_acos(x):
     return acos(max(-1., min(1., x)))
 
 def stable_sqrt(x):
     return sqrt(max(0., x))
 
-def distance_SO3(q1, q2, type = 'arithmetic'):
+def distance_SO3(q1 : NDArray[np.float64], \
+                 q2 : NDArray[np.float64], \
+                 type = Literal['arithmetic', 'geometric']) -> float:
     '''
-    q1, q2 : unit quaternion representation of spatial rotations.
+    q1, q2 : unit quaternion representation of spatial rotations, Numpy vector of np.float64 of length 4.
     type : 'arithmetic' | 'geometric'.
     '''
     if type == 'arithmetic':
@@ -38,6 +43,7 @@ def distance_S2(v1, v2, type = 'arithmetic'):
         raise ValueError('Invalid argument.')
 
 if __name__ == '__main__':
+
     q1 = np.random.randn(4)
     q2 = np.random.randn(4)
     q1 /= np.linalg.norm(q1)

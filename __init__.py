@@ -8,3 +8,4 @@ __all__ = [
 from .symmetry_group import get_sym_grp
 from .meanvar import meanvar_SO3_G, meanvar_S2_G
 from .NUG import solve_NUG
+# from .distance import distance_SO3, distance_S2
