@@ -131,6 +131,7 @@ variance_S2(vecs: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]], type: L
 
 ## `averaging_SO3_G.mean_variance_SO3_G`
 ```
+mean_variance_SO3_G(quats: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]], sym_grp, type: Literal['arithmetic'] = 'arithmetic', **kwargs)
     The `mean_variance_SO3_G` function calculates the mean and variance of a set of spatial rotations with molecular symmetry.
 
     - `quats`: Unit quaternion representations of spatial rotations. It is a numpy array of shape `(n, 4)` with a data type of `np.float64`.
@@ -147,7 +148,8 @@ variance_S2(vecs: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]], type: L
 
 ## `averaging_S2_G.mean_variance_S2_G`
 ```
-The `mean_variance_S2_G` function calculates the mean and variance of a set of projection directions with molecular symmetry.
+mean_variance_S2_G(vecs: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]], sym_grp, type: Literal['arithmetic'] = 'arithmetic', **kwargs)
+    The `mean_variance_S2_G` function calculates the mean and variance of a set of projection directions with molecular symmetry.
 
     - `quats`: Unit quaternion representations of projection directions. It is a numpy array of shape `(n, 3)` with a data type of `np.float64`.
     - `sym`: The molecular symmetry symbol. Acceptable inputs include `Cn`, `Dn`, `T`, `O`, `I`, `I1`, `I2`, `I3`. The symbols `I`, `I1`, `I2`, `I3` all denote icosahedral symmetry, but with different conventions. Notably, `I` is equivalent to `I2`. This convention is used in Relion. For more details, visit [Relion Conventions](https://relion.readthedocs.io/en/release-3.1/Reference/Conventions.html#symmetry).
