@@ -45,7 +45,7 @@ print(dir(pySymStat))
 
 # Tutorial
 
-The function [`averaging_SO3_G`](#averaging_so3_gmean_variance_so3_g) calculates the mean and variance of a given set of spatial rotations represented as unit quaternions. Meanwhile, the function [`averaging_S2_G`](#averaging_s2_gmean_variance_so3_g) computes the mean and variance of a given set of projection directions represented as unit vectors.
+The function [`averaging_SO3_G`](#averaging_so3_gmean_variance_so3_g) calculates the mean and variance of a given set of spatial rotations represented as unit quaternions. Meanwhile, the function [`averaging_S2_G`](#averaging_s2_gmean_variance_s2_g) computes the mean and variance of a given set of projection directions represented as unit vectors.
 
 Click the hyperlinks to view the descriptions, help information, source code, and demo script for these two functions.
 
