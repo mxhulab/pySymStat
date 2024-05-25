@@ -128,3 +128,18 @@ variance_S2(vecs: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]], type: L
     - `mean`: Specifies the mean of the input projection directions. If this is `None`, the variance is calculated in an unsupervised manner.
 ```
 [source](averaging_S2.py) [demo](demo/demo_variance_S2.py)
+
+## `averaging_SO3_G.mean_variance_SO3_G`
+```
+mean_variance_SO3_G(quats: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]], sym_grp, type: Literal['arithmetic'] = 'arithmetic', **kwargs)
+    The `mean_variance_SO3_G` function calculates the mean and variance of a set of spatial rotations with molecular symmetry.
+
+    - `quats`: Unit quaternion representations of a set of spatail roations. It is a numpy array of shape `(n, 4)` with a data type of `np.float64`.
+    - `sym`: The molecular symmetry symbol. Acceptable inputs include `Cn`, `Dn`, `T`, `O`, `I`, `I1`, `I2`, `I3`. The symbols `I`, `I1`, `I2`, `I3` all denote icosahedral symmetry, but with different conventions. Notably, `I` is equivalent to `I2`. This convention is used in Relion. For more details, visit [Relion Conventions](https://relion.readthedocs.io/en/release-3.1/Reference/Conventions.html#symmetry).
+     - `type`: Specifies the type of distance. Only accepts the value `arithmetic`."
+     - output[0]: the mean of these spatail roations
+     - output[1]: the variacen of these sptail rotations
+     - output[2]: the correct representatives of these sptail rotations
+     - output[3]: the index of elements in the symmetry group corresponds to the correct represnetative
+```
+[source](averaging_SO3_G.py) [demo](demo/demo_mean_variance_SO3_G.py)

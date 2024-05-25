@@ -11,7 +11,7 @@ if __name__ == '__main__':
 
     n = 100
 
-    # generated N spatial rotations represented by unit quaternions
+    # generate N spatial rotations represented by unit quaternions
     quats = np.random.randn(n, 4)
     quats /= np.linalg.norm(quats, axis = 1)[:, np.newaxis]
     print(quats)
