@@ -6,7 +6,7 @@ import numpy as np
 
 from .distance import distance_SO3
 
-from .quaternion import quat_mult, quat_conj, quat_rotate
+from .quaternion import quat_mult
 
 from .meanvar import meanvar_M_G
 
@@ -23,13 +23,15 @@ def mean_variance_SO3_G(quats : NDArray[np.float64], \
     '''
     The `mean_variance_SO3_G` function calculates the mean and variance of a set of spatial rotations with molecular symmetry.
 
-    - `quats`: Unit quaternion representations of a set of spatail roations. It is a numpy array of shape `(n, 4)` with a data type of `np.float64`.
+    - `quats`: Unit quaternion representations of spatial rotations. It is a numpy array of shape `(n, 4)` with a data type of `np.float64`.
     - `sym`: The molecular symmetry symbol. Acceptable inputs include `Cn`, `Dn`, `T`, `O`, `I`, `I1`, `I2`, `I3`. The symbols `I`, `I1`, `I2`, `I3` all denote icosahedral symmetry, but with different conventions. Notably, `I` is equivalent to `I2`. This convention is used in Relion. For more details, visit [Relion Conventions](https://relion.readthedocs.io/en/release-3.1/Reference/Conventions.html#symmetry).
-     - `type`: Specifies the type of distance. Only accepts the value `arithmetic`."
-     - output[0]: the mean of these spatail roations
-     - output[1]: the variacen of these sptail rotations
-     - output[2]: the correct representatives of these sptail rotations
-     - output[3]: the index of elements in the symmetry group corresponds to the correct represnetative
+    - `type`: Specifies the type of distance calculation to be used. It only accepts the value `arithmetic`.
+
+    Output:
+    - `output[0]`: The mean of these spatial rotations.
+    - `output[1]`: The variance of these spatial rotations.
+    - `output[2]`: The correct representatives of these spatial rotations.
+    - `output[3]`: The index of elements in the symmetry group corresponding to the correct representative.
     '''
 
     assert(quats.shape[1] == 4)
