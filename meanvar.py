@@ -9,37 +9,7 @@ from .symmetry_group import get_sym_grp
 from .distance import distance_SO3, distance_S2
 from .quaternion import quat_mult, quat_conj, quat_rotate
 from .NUG import solve_NUG
-
-def mean_SO3(quats, type = 'arithmetic'):
-    '''
-    Compute the mean of spatial rotations.
-    Only arithmetic mean is implemented since there is no
-    known algorithm for geometric case.
-
-    parameters
-    ==========
-    quats : numpy.ndarray of shape (n, 4).
-        Unit quaternion representations of spatial rotations.
-    type : 'arithmetic' | 'geometric'.
-    '''
-    if type == 'arithmetic':
-        n = len(quats)
-        t = np.mean(quats.reshape((n, 4, 1)) * quats.reshape((n, 1, 4)), axis = 0)
-        _, eigvects = np.linalg.eigh(t)
-        return eigvects[:, -1].copy()
-
-    elif type == 'geometric':
-        return NotImplemented
-
-    else:
-        raise ValueError('Invalid argument.')
-
-def variance_SO3(quats, type = 'arithmetic', ref = None):
-    n = len(quats)
-    if ref is None:
-        return sum(distance_SO3(quats[i], quats[j], type = type) ** 2 for i, j in combinations(range(n), 2)) / (n * n)
-    else:
-        return sum(distance_SO3(quats[i], ref, type = type) ** 2 for i in range(n)) / n
+from .averaging_SO3 import mean_SO3, variance_SO3
 
 def mean_S2(vecs, type = 'arithmetic'):
     '''
@@ -87,16 +57,10 @@ def meanvar_M_G(data, sym_grp, grp_action, distance, mean_func, variance_func, *
     var = variance_func(representatives)
     return mean, var, representatives, solutions
 
-def meanvar_SO3_G(quats, sym_grp, type = 'arithmetic', **kwargs):
-    grp_action = quat_mult
-    distance = lambda q1, q2: distance_SO3(q1, q2, type = type)
-    mean_func = lambda quats: mean_SO3(quats, type = type)
-    variance_func = lambda quats: variance_SO3(quats, type = type)
-    return meanvar_M_G(quats, sym_grp, grp_action, distance, mean_func, variance_func, **kwargs)
-
 def meanvar_S2_G(vecs, sym_grp, type = 'arithmetic', **kwargs):
     grp_action = lambda v, q: quat_rotate(quat_conj(q), v)
     distance = lambda v1, v2: distance_S2(v1, v2, type = type)
     mean_func = lambda vecs: mean_S2(vecs, type = type)
     variance_func = lambda vecs: variance_S2(vecs, type = type)
+
     return meanvar_M_G(vecs, sym_grp, grp_action, distance, mean_func, variance_func, **kwargs)
