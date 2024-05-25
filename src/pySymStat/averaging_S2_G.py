@@ -3,23 +3,21 @@ __all__ = [
 ]
 
 import numpy as np
+from numpy.typing import NDArray
+from typing import Literal, Tuple
 
 from .distance import distance_S2
-
 from .quaternion import quat_conj, quat_rotate
-
 from .meanvar import meanvar_M_G
-
 from .averaging_S2 import mean_S2, variance_S2
 
-from numpy.typing import NDArray
+def mean_variance_S2_G(
+    vecs : NDArray[np.float64],
+    sym_grp : str,
+    type : Literal['arithmetic', 'geometric'] = 'arithmetic',
+    **kwargs
+) -> Tuple[NDArray[np.float64], float, NDArray[np.float64], NDArray[np.int32]]:
 
-from typing import Literal
-
-def mean_variance_S2_G(vecs : NDArray[np.float64], \
-                       sym_grp, \
-                       type : Literal['arithmetic'] = 'arithmetic', \
-                       **kwargs):
     '''
     The `mean_variance_S2_G` function calculates the mean and variance of a set of projection directions with molecular symmetry.
 
@@ -34,7 +32,7 @@ def mean_variance_S2_G(vecs : NDArray[np.float64], \
     - `output[3]`: The index of elements in the symmetry group corresponding to the correct representative.
     '''
 
-    assert(vecs.shape[1] == 3)
+    assert vecs.ndim == 2 and vecs.shape[1] == 3
 
     grp_action = lambda v, q: quat_rotate(quat_conj(q), v)
     distance = lambda v1, v2: distance_S2(v1, v2, type = type)

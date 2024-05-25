@@ -4,21 +4,24 @@ __all__ = [
 ]
 
 import numpy as np
-from math import pi, sin, cos, acos, sqrt, isclose
-from .quaternion import *
-
+from math import acos, sqrt
 from numpy.typing import NDArray
 from typing import Literal
 
-def stable_acos(x):
+from .quaternion import *
+
+def stable_acos(x : float) -> float:
     return acos(max(-1., min(1., x)))
 
-def stable_sqrt(x):
+def stable_sqrt(x : float) -> float:
     return sqrt(max(0., x))
 
-def distance_SO3(q1 : NDArray[np.float64], \
-                 q2 : NDArray[np.float64], \
-                 type : Literal['arithmetic', 'geometric'] = 'arithmetic') -> float:
+def distance_SO3(
+    q1 : NDArray[np.float64],
+    q2 : NDArray[np.float64],
+    type : Literal['arithmetic', 'geometric'] = 'arithmetic'
+) -> float:
+
     '''
     The `distance_SO3` function calculates either the arithmetic or geometric distance between two spatial rotations.
     - `q1`, `q2`: These are the unit quaternion representations of spatial rotations, each a Numpy vector of type `np.float64` with a length of 4.
@@ -32,9 +35,12 @@ def distance_SO3(q1 : NDArray[np.float64], \
     else:
         raise ValueError('Invalid argument.')
 
-def distance_S2(v1 : NDArray[np.float64], \
-                v2 : NDArray[np.float64], \
-                type : Literal['arithmetic', 'geometric'] = 'arithmetic') -> float:
+def distance_S2(
+    v1 : NDArray[np.float64],
+    v2 : NDArray[np.float64],
+    type : Literal['arithmetic', 'geometric'] = 'arithmetic'
+) -> float:
+
     '''
     The `distance_S2` function calculates either the arithmetic or geometric distance between two projection directions.
     - `v1`, `v2`: These are the unit vectors representing projection directions, each a Numpy vector of type `np.float64` with a length of 3.

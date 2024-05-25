@@ -3,11 +3,8 @@ import numpy as np
 from itertools import product
 from math import *
 
-import sys
-sys.path.append('../../')
-from pySymStat import get_sym_grp
+from pySymStat import get_sym_grp, mean_SO3, variance_SO3, mean_S2, variance_S2
 from pySymStat.quaternion import quat_mult, quat_rotate, quat_conj
-from pySymStat.meanvar import mean_SO3, variance_SO3, mean_S2, variance_S2
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description = 'Test program of pySymStat.')
@@ -42,7 +39,7 @@ if __name__ == '__main__':
             for i in range(1, n_size):
                 new_dataset[i] = grp_action(i_dataset[i], sym_grp_elems[solution[i - 1]])
             mean = mean_func(new_dataset, type = 'arithmetic')
-            cost = variance_func(new_dataset, type = 'arithmetic', ref = mean)
+            cost = variance_func(new_dataset, type = 'arithmetic', mean = mean)
             if opt_cost > cost: opt_cost, opt_solution = cost, solution
 
         opt_sols[i_test, 0] = 0

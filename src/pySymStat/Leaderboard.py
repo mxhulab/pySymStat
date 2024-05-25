@@ -17,7 +17,7 @@ class Leaderboard(object):
         self.data = np.empty(capacity + 1, dtype = dtype)
         self.size = 0
 
-    def __heap_push__(self, x):
+    def _heap_push(self, x):
         self.data[self.size] = x
         i = self.size
         fi = (i - 1) // 2
@@ -27,7 +27,7 @@ class Leaderboard(object):
             fi = (i - 1) // 2
         self.size += 1
 
-    def __heap_pop__(self):
+    def _heap_pop(self):
         if self.size == 0: return
         self.data[0] = self.data[self.size - 1]
         self.size -= 1
@@ -40,12 +40,12 @@ class Leaderboard(object):
             lft, rgt = i * 2 + 1, i * 2 + 2
 
     def push(self, x):
-        self.__heap_push__(x)
+        self._heap_push(x)
         if self.size > self.capacity: self.pop()
 
     def pop(self):
         ret = self.data[0]
-        self.__heap_pop__()
+        self._heap_pop()
         return ret
 
     def empty(self):

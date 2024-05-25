@@ -5,10 +5,21 @@ __all__ = [
 import numpy as np
 import picos as pic
 from itertools import combinations
+from numpy.typing import NDArray
+
 from .Leaderboard import Leaderboard
 from .Partial_Solution import Partial_Solution
 
-def solve_NUG(f, grp_table, grp_irreps, leaderboard_capacity = 20, ignore_threshold = 0.99, original_rounding = False, verbosity = 0):
+def solve_NUG(
+    f : NDArray[np.float64],
+    grp_table : NDArray[np.int32],
+    grp_irreps : NDArray,
+    leaderboard_capacity : int = 20,
+    ignore_threshold : float = 0.99,
+    original_rounding : bool = False,
+    verbosity : int = 0
+) -> NDArray[np.int32]:
+
     '''
     Solve the following non-unique games (NUG) over a finite group G:
 
@@ -53,12 +64,10 @@ def solve_NUG(f, grp_table, grp_irreps, leaderboard_capacity = 20, ignore_thresh
 
     Returns
     =======
-    (optimal_cost, optimal_solution)
-        optimal_cost : float type, the optimal value of NUG.
-        optimal_solution : a numpy.ndarray, the optimal solution of NUG.
-            optimal_solution.shape = (n,)
-            optimal_solution.dtype = np.int32
-            optimal_solution[i] is the index of g_i.
+    optimal_solution : a numpy.ndarray, the optimal solution of NUG.
+        optimal_solution.shape = (n,)
+        optimal_solution.dtype = np.int32
+        optimal_solution[i] is the index of g_i.
 
     Notice that two solutions of NUG are intrinsically the same
     if they are differed by right multiplication of a common group

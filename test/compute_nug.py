@@ -2,11 +2,8 @@ import argparse
 import numpy as np
 from math import *
 
-import sys
-sys.path.append('../../')
-from pySymStat import get_sym_grp
+from pySymStat import get_sym_grp, mean_variance_SO3_G, mean_variance_S2_G
 from pySymStat.quaternion import quat_mult, quat_rotate, quat_conj
-from pySymStat.meanvar import meanvar_SO3_G, meanvar_S2_G
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description = 'Test program of pySymStat.')
@@ -24,8 +21,8 @@ if __name__ == '__main__':
     sym_grp_elems = sym_grp_info[0]
     n_test = 1000
     n_size = ceil(log(1000, len(sym_grp_elems))) + 1
-    grp_action    = quat_mult     if d == 4 else lambda v, q: quat_rotate(quat_conj(q), v)
-    meanvar_func  = meanvar_SO3_G if d == 4 else meanvar_S2_G
+    grp_action = quat_mult if d == 4 else lambda v, q: quat_rotate(quat_conj(q), v)
+    meanvar_func = mean_variance_SO3_G if d == 4 else mean_variance_S2_G
 
     # Compute NUG solutions.
     nug_sols = np.empty((n_test, n_size), dtype = np.int32)
