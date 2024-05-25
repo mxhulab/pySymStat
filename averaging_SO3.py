@@ -34,6 +34,13 @@ def mean_SO3(quats : NDArray[np.float64], \
 def variance_SO3(quats : NDArray[np.float64], \
                  type : Literal['arithmetic'] = 'arithmetic', \
                  mean : Literal[None, NDArray[np.float64]] = None) -> float:
+    '''
+    The `variance_SO3` function calculates the variances of a set of spatial rotations.
+
+    - `quats`: Unit quaternion representations of spatial rotations, provided as a numpy array with the shape `(n, 4)` and a data type of `np.float64`.
+    - `type`: Specifies the type of distance calculation to be used. It only accepts the value `arithmetic`.
+    - `mean`: Specifies the mean of the input spatial rotations. If this is `None`, the variance is calculated in an unsupervised manner.
+    '''
 
     assert(quats.shape[1] == 4)
 
