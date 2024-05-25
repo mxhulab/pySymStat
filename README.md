@@ -108,4 +108,12 @@ variance_SO3(quats: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]], type:
 ```
 [source](averaging_SO3.py) [demo](demo/demo_variance_SO3.py)
 
-## ``
+## `averaging_S2.mean_S2`
+```
+mean_S2(vecs: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]], type: Literal['arithmetic'] = 'arithmetic') -> numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]]
+    The `mean_S2` function calculates the mean of a set of projection directions.
+
+    - `quats`: Unit vector representations of a set of projection directions. It is a numpy array of shape `(n, 3)` with a data type of `np.float64`.
+    - `type`: Specifies the type of distance. Only accepts the value `arithmetic`."
+```
+[source](averaging_S2.py) [demo](demo/demo_mean_S2.py)
