@@ -117,3 +117,14 @@ mean_S2(vecs: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]], type: Liter
     - `type`: Specifies the type of distance. Only accepts the value `arithmetic`."
 ```
 [source](averaging_S2.py) [demo](demo/demo_mean_S2.py)
+
+## `averaging_S2.variance_S2`
+```
+variance_S2(vecs: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]], type: Literal['arithmetic'] = 'arithmetic', mean: Literal[None, numpy.ndarray[Any, numpy.dtype[numpy.float64]]] = None) -> float
+    The `variance_S2` function calculates the variances of a set of projection directions.
+
+    - `vecs`: Unit vector representations of projection directions, provided as a numpy array with the shape `(n, 3)` and a data type of `np.float64`.
+    - `type`: Specifies the type of distance calculation to be used. It only accepts the value `arithmetic`.
+    - `mean`: Specifies the mean of the input projection directions. If this is `None`, the variance is calculated in an unsupervised manner.
+```
+[source](averaging_S2.py) [demo](demo/demo_variance_S2.py)
