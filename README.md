@@ -95,7 +95,7 @@ mean_SO3(quats: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]], type: Lit
     - `quats`: Unit quaternion representations of a set of spatial rotations. It is a numpy array of shape `(n, 4)` with a data type of `np.float64`.
     - `type`: Specifies the type of distance. Only accepts the value `arithmetic`."
 ```
-[source](averaing_SO3.py) [demo](demo/demo_mean_SO3.py)
+[source](averaging_SO3.py) [demo](demo/demo_mean_SO3.py)
 
 ## `averaging_SO3.variance_SO3`
-[source](averaing_SO3.py) [demo](demo/demo_variance_SO3.py)
+[source](averaging_SO3.py) [demo](demo/demo_variance_SO3.py)

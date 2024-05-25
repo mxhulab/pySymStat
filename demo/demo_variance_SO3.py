@@ -11,11 +11,12 @@ if __name__ == '__main__':
 
     n = 100
 
+    # generated N spatial rotations represented by unit quaternions
     quats = np.random.randn(n, 4)
     quats /= np.linalg.norm(quats, axis = 1)[:, np.newaxis]
-
     print(quats)
-    print(np.linalg.norm(quats, axis = 1))
+
+    # print(np.linalg.norm(quats, axis = 1))
 
     print("variance of 100 spatial rotations (without assigning mean):\n", pySymStat.averaging_SO3.variance_SO3(quats))
 
