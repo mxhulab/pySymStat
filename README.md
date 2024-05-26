@@ -10,17 +10,6 @@ This program package implements algorithm proposed in the paper [The Moments of 
 
 CryoSieve is an open-source software, developed using Python. Please access our source code on [GitHub](https://github.com/mxhulab/pySymStat).
 
-## Preparation of Conda Environment
-
-Prepare a conda environment with the following commands
-```
-conda create -n PYSYMSTAT_ENV python=3.10
-```
-and activate this conda environemnt via
-```
-conda activate PYSYMSTAT_ENV
-```
-
 ## Installing pySymStat
 
 Install pySymStat by executing the following command with Pip:
