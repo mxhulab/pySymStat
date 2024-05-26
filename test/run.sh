@@ -1,6 +1,3 @@
-# Generate dataset.
-python generate_dataset.py
-
 # Compute optimal solutions.
 for space in SO3 S2; do
     for group in C2 C7 D2 D7 T O I; do

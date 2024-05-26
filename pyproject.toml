@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pysymstat"
+version = "1.1"
+authors = [
+    { name="Qi Zhang", email="q-zhang20@mails.tsinghua.edu.cn" },
+    { name="Mingxu Hu", email="humingxu@smart.org.cn" },
+    { name="Chenglong Bao", email="clbao@tsinghua.edu.cn" },
+]
+description = "pySymStat: average orientations, including both spatial rotations and projection directions, while accounting for molecular symmetry."
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.7"
+dependencies = [
+    "numpy>=1.18",
+    "picos>=2.4.12",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Operating System :: OS Independent",
+    "Environment :: GPU :: NVIDIA CUDA",
+    "Topic :: Scientific/Engineering :: Image Processing"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/mxhulab/pySymStat"

@@ -1,9 +1,11 @@
 __all__ = [
     'get_sym_grp',
-    'averaging_SO3',
-    'averaging_S2',
-    'averaging_SO3_G',
-    'averaging_S2_G'
+    'mean_SO3',
+    'variance_SO3',
+    'mean_S2',
+    'variance_S2',
+    'mean_variance_SO3_G',
+    'mean_variance_S2_G',
 ]
 
 from .symmetry_group import get_sym_grp

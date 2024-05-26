@@ -6,6 +6,7 @@ __all__ = [
 import numpy as np
 from math import sqrt, pi, sin, cos
 from functools import reduce
+
 from .quaternion import *
 
 def generate_sym_grp(qa, qb, elems, elems_ab, q, ab):

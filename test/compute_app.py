@@ -3,11 +3,8 @@ import numpy as np
 from itertools import product
 from math import *
 
-import sys
-sys.path.append('../../')
-from pySymStat import get_sym_grp
+from pySymStat import get_sym_grp, variance_SO3, variance_S2
 from pySymStat.quaternion import quat_mult, quat_rotate, quat_conj
-from pySymStat.meanvar import variance_SO3, variance_S2
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description = 'Test program of pySymStat.')

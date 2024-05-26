@@ -3,23 +3,21 @@ __all__ = [
 ]
 
 import numpy as np
+from numpy.typing import NDArray
+from typing import Literal, Tuple
 
 from .distance import distance_SO3
-
 from .quaternion import quat_mult
-
 from .meanvar import meanvar_M_G
-
 from .averaging_SO3 import mean_SO3, variance_SO3
 
-from numpy.typing import NDArray
+def mean_variance_SO3_G(
+    quats : NDArray[np.float64],
+    sym_grp : str,
+    type : Literal['arithmetic', 'geometric'] = 'arithmetic',
+    **kwargs
+) -> Tuple[NDArray[np.float64], float, NDArray[np.float64], NDArray[np.int32]]:
 
-from typing import Literal
-
-def mean_variance_SO3_G(quats : NDArray[np.float64], \
-                        sym_grp, \
-                        type : Literal['arithmetic'] = 'arithmetic', \
-                        **kwargs):
     '''
     The `mean_variance_SO3_G` function calculates the mean and variance of a set of spatial rotations with molecular symmetry.
 
@@ -34,7 +32,7 @@ def mean_variance_SO3_G(quats : NDArray[np.float64], \
     - `output[3]`: The index of elements in the symmetry group corresponding to the correct representative.
     '''
 
-    assert(quats.shape[1] == 4)
+    assert quats.ndim == 2 and quats.shape[1] == 4
 
     grp_action = quat_mult
     distance = lambda q1, q2: distance_SO3(q1, q2, type = type)

@@ -4,11 +4,8 @@ import pylab
 from itertools import product
 from math import *
 
-import sys
-sys.path.append('../../')
-from pySymStat import get_sym_grp
-from pySymStat.quaternion import quat_mult, quat_rotate, quat_conj
-from pySymStat.meanvar import mean_SO3, variance_SO3, mean_S2, variance_S2
+from pySymStat import get_sym_grp, mean_SO3, variance_SO3
+from pySymStat.quaternion import quat_mult
 
 spaces = ['SO3', 'S2']
 types  = ['arithmetic', 'geometric']
@@ -40,7 +37,7 @@ if __name__ == '__main__':
             for i in range(n_size):
                 i_dataset[i] = quat_mult(i_dataset[i], sym_grp_elems[app_sols[i_test, i]])
             mean = mean_SO3(i_dataset, type = 'arithmetic')
-            app_costs[i_test] = variance_SO3(i_dataset, type = 'arithmetic', ref = mean)
+            app_costs[i_test] = variance_SO3(i_dataset, type = 'arithmetic', mean = mean)
         rcg = np.abs(opt_costs - app_costs) / opt_costs
         rcg1 = np.sum(rcg < 0.01) / 1000 * 100
         rcg2 = np.sum(rcg < 0.1)  / 1000 * 100

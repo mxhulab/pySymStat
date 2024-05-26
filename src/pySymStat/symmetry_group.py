@@ -3,6 +3,7 @@ __all__ = [
 ]
 
 import numpy as np
+
 from .quaternion import *
 from .symmetry_group_Cn import get_sym_grp_Cn_elems, get_sym_grp_Cn_irreps
 from .symmetry_group_Dn import get_sym_grp_Dn_elems, get_sym_grp_Dn_irreps
