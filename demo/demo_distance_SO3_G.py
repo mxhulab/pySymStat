@@ -7,6 +7,8 @@ import numpy as np
 
 import pySymStat
 
+# from pySymStat.distance import distance_SO3_G
+
 if __name__ == '__main__':
 
     q1 = np.random.randn(4)
@@ -19,6 +21,9 @@ if __name__ == '__main__':
 
     print("spatial rotation q2: ", q2)
 
-    print("arithmetic distance between q1 and q2: \t", pySymStat.distance.distance_SO3(q1, q2, 'arithmetic'))
-    print("geometric distance between q1 and q2: \t" , pySymStat.distance.distance_SO3(q1, q2, 'geometric'))
+    distance, q1_g = pySymStat.distance.distance_SO3_G(q1, q2, 'O', 'arithmetic')
+
+    print("arithmetic distance between q1 and q2 with molecular symmetry octahedral: \t", distance)
+
+    print("the closest representative of q1 to q2: \t", q1_g)
 

@@ -62,6 +62,33 @@ get_sym_grp(sym)
 ```
 [source](symmetry_group.py) [demo](demo/demo_get_sym_grp.py)
 
+## `distance.distance_SO_G`
+```
+distance_SO3_G(q1: numpy.ndarray, q2: numpy.ndarray, sym_grp: str, type: Literal['arithmetic', 'geometric'] = 'arithmetic') -> Tuple[float, numpy.ndarray[Any, numpy.dtype[numpy.float64]]]
+    The `distance_SO3_G` function calculates either the arithmetic or geometric distance between two spatial rotations with molecular symmetry.
+    - `q1`, `q2`: These are the unit quaternion representations of spatial rotations, each a Numpy vector of type `np.float64` with a length of 4.
+    - `sym`: The molecular symmetry symbol. Acceptable inputs include `Cn`, `Dn`, `T`, `O`, `I`, `I1`, `I2`, `I3`. The symbols `I`, `I1`, `I2`, `I3` all denote icosahedral symmetry, but with different conventions. Notably, `I` is equivalent to `I2`. This convention is used in Relion. For more details, visit [Relion Conventions](https://relion.readthedocs.io/en/release-3.1/Reference/Conventions.html#symmetry).
+    - `type`: Specifies the type of distance calculation. Options are 'arithmetic' or 'geometric'.
+
+    Output:
+    - `output[0]`: The distance between two spatial rotations with molecular symmetry.
+    - `output[1]`: The closest representative of `q1` to `q2`
+```
+[source](distance.py) [demo](demo/demo_distance_SO3_G.py)
+
+## `distance.distance_S2_G`
+```
+distance_S2_G(v1: numpy.ndarray, v2: numpy.ndarray, sym_grp: str, type: Literal['arithmetic', 'geometric'] = 'arithmetic') -> Tuple[float, numpy.ndarray[Any, numpy.dtype[numpy.float64]]]
+    The `distance_S2_G` function calculates either the arithmetic or geometric distance between two projection directions with molecular symmetry.
+    - `v1`, `v2`: These are the unit vectors representing projection directions, each a Numpy vector of type `np.float64` with a length of 3.
+    - `sym`: The molecular symmetry symbol. Acceptable inputs include `Cn`, `Dn`, `T`, `O`, `I`, `I1`, `I2`, `I3`. The symbols `I`, `I1`, `I2`, `I3` all denote icosahedral symmetry, but with different conventions. Notably, `I` is equivalent to `I2`. This convention is used in Relion. For more details, visit [Relion Conventions](https://relion.readthedocs.io/en/release-3.1/Reference/Conventions.html#symmetry).
+    - `type`: Specifies the type of distance calculation. Options are 'arithmetic' or 'geometric'.
+
+    Output:
+    - `output[0]`: The distance between two projection direction with molecular symmetry.
+    - `output[1]`: The closest representative of `v1` to `v2`
+```
+
 ## `averaging_SO3.mean_SO3`
 ```
 mean_SO3(quats: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]], type: Literal['arithmetic'] = 'arithmetic') -> numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]]
