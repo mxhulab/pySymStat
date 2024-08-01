@@ -88,6 +88,7 @@ distance_S2_G(v1: numpy.ndarray, v2: numpy.ndarray, sym_grp: str, type: Literal[
     - `output[0]`: The distance between two projection direction with molecular symmetry.
     - `output[1]`: The closest representative of `v1` to `v2`
 ```
+[source](distance.py) [demo](demo/demo_distance_S2_G.py)
 
 ## `averaging_SO3.mean_SO3`
 ```
