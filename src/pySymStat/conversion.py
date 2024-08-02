@@ -74,25 +74,3 @@ def quaternion_to_euler(src : NDArray[np.float64]) -> NDArray[np.float64]:
     alpha = math.degrees(alpha)
 
     return np.array([alpha, beta, gamma], dtype = np.float64)
-
-if __name__ == '__main__':
-
-    def test(unit_vector):
-
-        print(unit_vector)
-
-        [q0, q1, q2, q3] = unit_vector
-
-        rot, tilt, psi = quaternion_to_euler([q0, q1, q2, q3])
-
-        # print(rot, tilt, psi)
-
-        q0, q1, q2, q3 = euler_to_quaternion([rot, tilt, psi])
-
-        print([q0, q1, q2, q3])
-
-    for _ in range(100):
-
-        v = np.random.randn(4)
-        v /= np.linalg.norm(v)
-        test(v)
