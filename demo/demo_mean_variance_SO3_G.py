@@ -18,5 +18,5 @@ if __name__ == '__main__':
 
     mean, variance, _, _ = pySymStat.averaging_SO3_G.mean_variance_SO3_G(spatial_rotations, 'C3', verbosity = 1)
 
-    print(mean)
-    print(variance)
+    print("mean :\n", mean)
+    print("variance : \n", variance)
