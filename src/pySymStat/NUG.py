@@ -188,7 +188,9 @@ def solve_NUG(
     return np.array([leaderboard.data[0].get_weight(i, 0) for i in range(n)], dtype = np.int32)
 
 if __name__ == '__main__':
+
     from .symmetry_group import get_sym_grp
+
     _, grp_table, grp_irreps = get_sym_grp('C4')
     n = 3
     N = 4

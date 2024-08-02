@@ -26,5 +26,3 @@ if __name__ == '__main__':
     print("arithmetic distance between v1 and v2 with molecular symmetry octahedral: \t", distance)
 
     print("the closest representative of v1 to v2: \t", v1_g)
-
-    print(help(pySymStat.distance.distance_S2_G))

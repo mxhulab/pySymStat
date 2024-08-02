@@ -43,7 +43,7 @@ distance_SO3(q1: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]], q2: nump
     - `q1`, `q2`: These are the unit quaternion representations of spatial rotations, each a Numpy vector of type `np.float64` with a length of 4.
     - `type`: Specifies the type of distance calculation. Options are 'arithmetic' or 'geometric'.
 ```
-[source](distance.py) [demo](demo/demo_distance_SO3.py)
+[source](src/pySymStat/distance.py) [demo](demo/demo_distance_SO3.py)
 
 ## `distance.distance_S2`
 ```
@@ -52,7 +52,7 @@ distance_S2(v1: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]], v2: numpy
     - `v1`, `v2`: These are the unit vectors representing projection directions, each a Numpy vector of type `np.float64` with a length of 3.
     - `type`: Specifies the type of distance calculation. Options are 'arithmetic' or 'geometric'.
 ```
-[source](distance.py) [demo](demo/demo_distance_S2.py)
+[source](src/pySymStat/distance.py) [demo](demo/demo_distance_S2.py)
 
 ## `get_sym_grp`
 ```
@@ -60,7 +60,7 @@ get_sym_grp(sym)
     The `get_sym_grp` function retrieves the elements, the Cayley table, and the irreducible representations for a specified molecular symmetry symbol.
     - `sym`: The molecular symmetry symbol. Acceptable inputs include `Cn`, `Dn`, `T`, `O`, `I`, `I1`, `I2`, `I3`. The symbols `I`, `I1`, `I2`, `I3` all denote icosahedral symmetry, but with different conventions. Notably, `I` is equivalent to `I2`. This convention is used in Relion. For more details, visit [Relion Conventions](https://relion.readthedocs.io/en/release-3.1/Reference/Conventions.html#symmetry).
 ```
-[source](symmetry_group.py) [demo](demo/demo_get_sym_grp.py)
+[source](src/pySymStat/symmetry_group.py) [demo](demo/demo_get_sym_grp.py)
 
 ## `distance.distance_SO_G`
 ```
@@ -74,7 +74,7 @@ distance_SO3_G(q1: numpy.ndarray, q2: numpy.ndarray, sym_grp: str, type: Literal
     - `output[0]`: The distance between two spatial rotations with molecular symmetry.
     - `output[1]`: The closest representative of `q1` to `q2`
 ```
-[source](distance.py) [demo](demo/demo_distance_SO3_G.py)
+[source](src/pySymStat/distance.py) [demo](demo/demo_distance_SO3_G.py)
 
 ## `distance.distance_S2_G`
 ```
@@ -88,7 +88,7 @@ distance_S2_G(v1: numpy.ndarray, v2: numpy.ndarray, sym_grp: str, type: Literal[
     - `output[0]`: The distance between two projection direction with molecular symmetry.
     - `output[1]`: The closest representative of `v1` to `v2`
 ```
-[source](distance.py) [demo](demo/demo_distance_S2_G.py)
+[source](src/pySymStat/distance.py) [demo](demo/demo_distance_S2_G.py)
 
 ## `averaging_SO3.mean_SO3`
 ```
@@ -98,7 +98,7 @@ mean_SO3(quats: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]], type: Lit
     - `quats`: Unit quaternion representations of a set of spatial rotations. It is a numpy array of shape `(n, 4)` with a data type of `np.float64`.
     - `type`: Specifies the type of distance. Only accepts the value `arithmetic`."
 ```
-[source](averaging_SO3.py) [demo](demo/demo_mean_SO3.py)
+[source](src/pySymStat/averaging_SO3.py) [demo](demo/demo_mean_SO3.py)
 
 ## `averaging_SO3.variance_SO3`
 ```
@@ -109,7 +109,7 @@ variance_SO3(quats: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]], type:
     - `type`: Specifies the type of distance calculation to be used. It only accepts the value `arithmetic`.
     - `mean`: Specifies the mean of the input spatial rotations. If this is `None`, the variance is calculated in an unsupervised manner.
 ```
-[source](averaging_SO3.py) [demo](demo/demo_variance_SO3.py)
+[source](src/pySymStat/averaging_SO3.py) [demo](demo/demo_variance_SO3.py)
 
 ## `averaging_S2.mean_S2`
 ```
@@ -119,7 +119,7 @@ mean_S2(vecs: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]], type: Liter
     - `quats`: Unit vector representations of a set of projection directions. It is a numpy array of shape `(n, 3)` with a data type of `np.float64`.
     - `type`: Specifies the type of distance. Only accepts the value `arithmetic`."
 ```
-[source](averaging_S2.py) [demo](demo/demo_mean_S2.py)
+[source](src/pySymStat/averaging_S2.py) [demo](demo/demo_mean_S2.py)
 
 ## `averaging_S2.variance_S2`
 ```
@@ -130,7 +130,7 @@ variance_S2(vecs: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]], type: L
     - `type`: Specifies the type of distance calculation to be used. It only accepts the value `arithmetic`.
     - `mean`: Specifies the mean of the input projection directions. If this is `None`, the variance is calculated in an unsupervised manner.
 ```
-[source](averaging_S2.py) [demo](demo/demo_variance_S2.py)
+[source](src/pySymStat/averaging_S2.py) [demo](demo/demo_variance_S2.py)
 
 ## `averaging_SO3_G.mean_variance_SO3_G`
 ```
@@ -147,7 +147,7 @@ mean_variance_SO3_G(quats: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]]
     - `output[2]`: The correct representatives of these spatial rotations.
     - `output[3]`: The index of elements in the symmetry group corresponding to the correct representative.
 ```
-[source](averaging_SO3_G.py) [demo](demo/demo_mean_variance_SO3_G.py)
+[source](src/pySymStat/averaging_SO3_G.py) [demo](demo/demo_mean_variance_SO3_G.py)
 
 ## `averaging_S2_G.mean_variance_S2_G`
 ```
@@ -164,7 +164,7 @@ mean_variance_S2_G(vecs: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]], 
     - `output[2]`: The correct representatives of these projection directions.
     - `output[3]`: The index of elements in the symmetry group corresponding to the correct representative.
 ```
-[source](averaging_S2_G.py) [demo](demo/demo_mean_variance_S2_G.py)
+[source](src/pySymStat/averaging_S2_G.py) [demo](demo/demo_mean_variance_S2_G.py)
 
 # Test Data and Reproduction of Results
 
