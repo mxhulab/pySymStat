@@ -36,6 +36,31 @@ A set of functions related to these calculations is also provided in this packag
 
 # Function List
 
+## `quaternion.quat_conj`
+```
+quat_conj(q: numpy.ndarray) -> numpy.ndarray
+    The `quat_conj` functions calculates the conjugate of an input quaternion.
+    - `q`: This is a quaternion and should be a NumPy vector of type `np.float64` with a length of 4.
+```
+[source](src/pySymStat/quaternion.py) [demo](demo/demo_quat_conj.py)
+
+## `quaternion.quat_mult`
+```
+quat_mult(q1: numpy.ndarray, q2: numpy.ndarray) -> numpy.ndarray
+    The `quat_mult` functions calculates the product of two input quaternions.
+    - `q1` and `q2`: This are two quaternions and should be NumPy vectors of type `np.float64` with a length of 4.
+```
+[source](src/pySymStat/quaternion.py) [demo](demo/demo_quat_mult.py)
+
+## `quaternion.quat_rotate`
+```
+quat_rotate(q: numpy.ndarray, v: numpy.ndarray) -> numpy.ndarray
+    The `quat_rotate` functions rotate this a vector based on a spatial rotation represented by a unit quarternion.
+    - `q`: This is a quaternion and should be a NumPy vector of type `np.float64` with a length of 4. It represents the spatial rotation.
+    - `v`: This is a vector in 3D space, which to be rotated.
+```
+[source](src/pySymStat/quaternion.py) [demo](demo/demo_quat_rotate.py)
+
 ## `distance.distance_SO3`
 ```
 distance_SO3(q1: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]], q2: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]], type: Literal['arithmetic', 'geometric'] = 'arithmetic') -> float
