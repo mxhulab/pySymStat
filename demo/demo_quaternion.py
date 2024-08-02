@@ -7,8 +7,6 @@ import numpy as np
 
 import pySymStat
 
-print(dir(pySymStat))
-
 if __name__ == '__main__':
 
     q1 = np.random.randn(4)

@@ -1,8 +1,8 @@
 __all__ = [
-    'quat_norm',
+    'quat_norm', # hide this
     'quat_conj',
     'quat_mult',
-    'quat_same',
+    'quat_same', # hide this
     'quat_rotate'
 ]
 
