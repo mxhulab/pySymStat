@@ -37,9 +37,19 @@ A set of functions related to these calculations is also provided in this packag
 # Function List
 
 ## `conversion.euler_to_quaternion`
+```
+euler_to_quaternion(src: numpy.ndarray) -> numpy.ndarray
+    The `euler_to_quaternion` function converts Euler angles (Relion's convention) to a unit quaternion.
+    - `src`: This is a Numpy vector of type `np.float64` with a length of 3, representing `rlnAngleRot`, `rlnAngleTilt`, and `rlnAnglePsi` in Relion's starfile convention.
+```
 [source](src/pySymStat/conversion.py) [demo](demo/demo_conversion.py)
 
 ## `conversion.quaternion_to_euler`
+```
+quaternion_to_euler(src: numpy.ndarray) -> numpy.ndarray
+    The `quaternion_to_euler` function converts a unit quaternion to Euler angles (Relion's convention).
+    - `src`: This is a Numpy vector of type `np.float64` with a length of 4, which is a quaternion representing a spatial rotation.
+```
 [source](src/pySymStat/conversion.py) [demo](demo/demo_conversion.py)
 
 ## `quaternion.quat_conj`
