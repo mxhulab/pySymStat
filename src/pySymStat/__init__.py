@@ -2,6 +2,8 @@ __all__ = [
     'get_sym_grp',
 ]
 
+from .quaternion import quat_norm, quat_conj, quat_mult, quat_same, quat_rotate
+
 from .symmetry_group import get_sym_grp
 
 from .averaging_SO3 import mean_SO3, variance_SO3
