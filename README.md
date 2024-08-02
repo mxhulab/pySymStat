@@ -1,4 +1,4 @@
-# **pySymStat Overivew**
+# **pySymStat Overview**
 
 pySymStat is a Python software package designed to average orientations, including both spatial rotations and projection directions, while accounting for molecular symmetry.
 
@@ -35,6 +35,12 @@ The function [`averaging_SO3_G.mean_variance_SO3_G`](#averaging_so3_gmean_varian
 A set of functions related to these calculations is also provided in this package. Please refer to the Function List section for a comprehensive list.
 
 # Function List
+
+## `conversion.euler_to_quaternion`
+[source](src/pySymStat/conversion.py) [demo](demo/demo_conversion.py)
+
+## `conversion.quaternion_to_euler`
+[source](src/pySymStat/conversion.py) [demo](demo/demo_conversion.py)
 
 ## `quaternion.quat_conj`
 ```
