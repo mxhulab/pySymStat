@@ -45,7 +45,11 @@ quat_conj(q: numpy.ndarray) -> numpy.ndarray
 [source](src/pySymStat/quaternion.py) [demo](demo/demo_quat_conj.py)
 
 ## `quaternion.quat_mult`
-
+```
+quat_mult(q1: numpy.ndarray, q2: numpy.ndarray) -> numpy.ndarray
+    The `quat_mult` functions calculates the product of two input quaternions.
+    - `q1` and `q2`: This are two quaternions and should be NumPy vectors of type `np.float64` with a length of 4.
+```
 [source](src/pySymStat/quaternion.py) [demo](demo/demo_quat_mult.py)
 
 ## `distance.distance_SO3`
