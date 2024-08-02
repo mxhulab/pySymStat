@@ -42,7 +42,11 @@ quat_conj(q: numpy.ndarray) -> numpy.ndarray
     The `quat_conj` functions calculates the conjugate of an input quaternion.
     - `q`: This is a quaternion and should be a NumPy vector of type `np.float64` with a length of 4.
 ```
-[source][src/pySymStat/quaternion.py] [demo](demo/demo_quat_conj.py)
+[source](src/pySymStat/quaternion.py) [demo](demo/demo_quat_conj.py)
+
+## `quaternion.quat_mult`
+
+[source](src/pySymStat/quaternion.py) [demo](demo/demo_quat_mult.py)
 
 ## `distance.distance_SO3`
 ```
