@@ -36,6 +36,14 @@ A set of functions related to these calculations is also provided in this packag
 
 # Function List
 
+## `quaternion.quat_conj`
+```
+quat_conj(q: numpy.ndarray) -> numpy.ndarray
+    The `quat_conj` functions calculates the conjugate of an input quaternion.
+    - `q`: This is a quaternion and should be a NumPy vector of type `np.float64` with a length of 4.
+```
+[source][src/pySymStat/quaternion.py] [demo](demo/demo_quat_conj.py)
+
 ## `distance.distance_SO3`
 ```
 distance_SO3(q1: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]], q2: numpy.ndarray[typing.Any, numpy.dtype[numpy.float64]], type: Literal['arithmetic', 'geometric'] = 'arithmetic') -> float
