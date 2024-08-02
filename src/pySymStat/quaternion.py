@@ -14,12 +14,20 @@ def quat_norm(q : NDArray[np.float64]) -> float:
     return np.linalg.norm(q)
 
 def quat_conj(q : NDArray[np.float64]) -> NDArray[np.float64]:
+    '''
+    The `quat_conj` functions calculates the conjugate of an input quaternion.
+    - `q`: This is a quaternion and should be a NumPy vector of type `np.float64` with a length of 4.
+    '''
     return q * np.array([1, -1, -1, -1])
 
 def quat_mult(
     q1 : NDArray[np.float64],
     q2 : NDArray[np.float64]
 ) -> NDArray[np.float64]:
+    '''
+    The `quat_mult` functions calculates the product of two input quaternions.
+    - `q1` and `q2`: This are two quaternions and should be NumPy vectors of type `np.float64` with a length of 4.
+    '''
     w1, x1, y1, z1 = q1
     w2, x2, y2, z2 = q2
     return np.array([w1 * w2 - x1 * x2 - y1 * y2 - z1 * z2,
@@ -38,6 +46,11 @@ def quat_rotate(
     q : NDArray[np.float64], 
     v : NDArray[np.float64]
 ) -> NDArray[np.float64]:
+    '''
+    The `quat_rotate` functions rotate this a vector based on a spatial rotation represented by a unit quarternion.
+    - `q`: This is a quaternion and should be a NumPy vector of type `np.float64` with a length of 4. It represents the spatial rotation.
+    - `v`: This is a vector in 3D space, which to be rotated.
+    '''
     v = np.array([0, v[0], v[1], v[2]], dtype = np.float64)
     qv = quat_mult(quat_mult(q, v), quat_conj(q))
     return qv[1:]
