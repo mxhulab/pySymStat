@@ -6,6 +6,7 @@ import numpy as np
 from pySymStat import meanvar_SO3_G, meanvar_S2_G
 
 if __name__ == '__main__':
+
     spatial_rotations = np.random.randn(20, 4)
     spatial_rotations /= np.linalg.norm(spatial_rotations, axis = 1)[:, None]
     mean, var, representatives, solutions = meanvar_SO3_G(spatial_rotations, 'C3', verbosity = 1)

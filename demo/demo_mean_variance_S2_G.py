@@ -14,5 +14,5 @@ if __name__ == '__main__':
 
     mean, variance, _, _ = pySymStat.averaging_S2_G.mean_variance_S2_G(projection_directions, 'T', verbosity = 1)
 
-    print(mean)
-    print(variance)
+    print("mean :\n", mean)
+    print("variance : \n", variance)
