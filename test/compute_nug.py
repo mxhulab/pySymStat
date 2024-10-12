@@ -1,9 +1,7 @@
 import argparse
 import numpy as np
 from math import *
-
-from pySymStat import get_sym_grp, mean_variance_SO3_G, mean_variance_S2_G
-from pySymStat.quaternion import quat_mult, quat_rotate, quat_conj
+from pySymStat import get_grp_info, mean_variance_SO3_G, mean_variance_S2_G, action_SO3, action_S2
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description = 'Test program of pySymStat.')
@@ -12,16 +10,15 @@ if __name__ == '__main__':
     parser.add_argument('group',                                        help = 'the symmetry group.')
     parser.add_argument('--capacity',  type = int,   default = 20,      help = 'the hyperparameter m.')
     parser.add_argument('--threshold', type = float, default = 0.99,    help = 'the hyperparameter c.')
-    parser.add_argument('--origin',    action = 'store_true',           help = 'use original rounding algorithm, only works for cyclic groups!')
     args = parser.parse_args()
 
-    d = 3 if args.space == 'S2' else 4
+    d = 4 if args.space == 'SO3' else 3
     dataset = np.load(f'data/{args.space}.npy')
-    sym_grp_info  = get_sym_grp(args.group)
+    sym_grp_info  = get_grp_info(args.group)
     sym_grp_elems = sym_grp_info[0]
     n_test = 1000
     n_size = ceil(log(1000, len(sym_grp_elems))) + 1
-    grp_action = quat_mult if d == 4 else lambda v, q: quat_rotate(quat_conj(q), v)
+    grp_action   = action_SO3          if d == 4 else action_S2
     meanvar_func = mean_variance_SO3_G if d == 4 else mean_variance_S2_G
 
     # Compute NUG solutions.
@@ -31,17 +28,15 @@ if __name__ == '__main__':
 
     for i_test in range(n_test):
         i_dataset = dataset[i_test * n_size : (i_test + 1) * n_size]
-        _, nug_cost, _, nug_sol = meanvar_func(
+        _, _, nug_cost, nug_sol, _ = meanvar_func(
             i_dataset,
             sym_grp_info,
             type = args.type,
             leaderboard_capacity = args.capacity,
-            ignore_threshold = args.threshold,
-            original_rounding = args.origin
+            ignore_threshold = args.threshold
         )
         nug_sols[i_test] = nug_sol
         nug_costs[i_test] = nug_cost
         print(f'Test case {i_test + 1}, nug_sol:', nug_sols[i_test])
 
-    rounding = 'ori' if args.origin else f'm{args.capacity}_c{args.threshold:.2f}'
-    np.savez(f'data/nug_{rounding}_{args.space}_{args.type[:3]}_{args.group}.npz', sols = nug_sols, costs = nug_costs)
+    np.savez(f'data/nug_m{args.capacity}_c{args.threshold:.2f}_{args.space}_{args.type[:3]}_{args.group}.npz', sols = nug_sols, costs = nug_costs)

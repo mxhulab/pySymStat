@@ -3,9 +3,7 @@ import numpy as np
 import pylab
 from itertools import product
 from math import *
-
-from pySymStat import get_sym_grp, mean_SO3, variance_SO3
-from pySymStat.quaternion import quat_mult
+from pySymStat import get_grp_info, mean_SO3, variance_SO3, action_SO3
 
 spaces = ['SO3', 'S2']
 types  = ['arithmetic', 'geometric']
@@ -28,14 +26,14 @@ if __name__ == '__main__':
         # Notice that L^{SO(3)}(\tilde{g}_i) != \tilde{L}^{SO(3)}(\tilde{g}_i).
         # We should re-compute app_costs.
         dataset = np.load('data/SO3.npy')
-        sym_grp_info  = get_sym_grp(group)
+        sym_grp_info  = get_grp_info(group)
         sym_grp_elems = sym_grp_info[0]
         n_test = 1000
         n_size = ceil(log(1000, len(sym_grp_elems))) + 1
         for i_test in range(n_test):
             i_dataset = dataset[i_test * n_size : (i_test + 1) * n_size].copy()
             for i in range(n_size):
-                i_dataset[i] = quat_mult(i_dataset[i], sym_grp_elems[app_sols[i_test, i]])
+                i_dataset[i] = action_SO3(i_dataset[i], sym_grp_elems[app_sols[i_test, i]])
             mean = mean_SO3(i_dataset, type = 'arithmetic')
             app_costs[i_test] = variance_SO3(i_dataset, type = 'arithmetic', mean = mean)
         rcg = np.abs(opt_costs - app_costs) / opt_costs
@@ -120,28 +118,6 @@ if __name__ == '__main__':
         print()
     print(r'|-------------------------------------------------------------------------------|')
     print()
-
-
-    print(r'Approximation ability of NUG approach with original rounding for \tilde{L}^{SO(3)}.')
-    print(r'Show (RoE, max-RCG).')
-    print(r'| Group |   d_{SO(3)}^A   |   d_{SO(3)}^G   |    d_{S2}^A     |    d_{S2}^G     |')
-    print(r'|-------------------------------------------------------------------------------|')
-    for group in ['C2', 'C7']:
-        print(f'|   {group:2s}  |', end = '')
-        for space, type in product(spaces, types):
-            app_npz = np.load(f'data/app_{space}_{type[:3]}_{group}.npz')
-            nug_npz = np.load(f'data/nug_ori_{space}_{type[:3]}_{group}.npz')
-            app_sols = app_npz['sols']
-            nug_sols = nug_npz['sols']
-            app_costs = app_npz['costs']
-            nug_costs = nug_npz['costs']
-
-            success = np.sum(np.all(app_sols == nug_sols, axis = 1))
-            roe = success / 1000 * 100
-            maxrcg = np.max(np.abs(nug_costs - app_costs) / app_costs) * 100
-            print(f' ({roe:5.1f}%, {maxrcg:3.2f}%) |', end = '')
-        print()
-    print(r'|-------------------------------------------------------------------------------|')
 
 
     print(r'The (RoE, max-RCG) results for varying $m$ under $d_{SO(3)}^A$.')

@@ -1,20 +1,9 @@
-import os
-
-import sys
-sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../../')
-
 import numpy as np
-
-import pySymStat
+from pySymStat import mean_S2
 
 if __name__ == '__main__':
-
-    n = 100
-
-    # generated N projection directions represented by unit vectors
-    vecs = np.random.randn(n, 3)
-    vecs /= np.linalg.norm(vecs, axis = 1)[:, np.newaxis]
+    N = 10
+    vecs = np.random.randn(N, 3)
+    vecs /= np.linalg.norm(vecs, axis = 1, keepdims = True)
     print(vecs)
-
-    # print(np.linalg.norm(vecs, axis = 1))
-    print("mean of 100 projection directions:\n", pySymStat.averaging_S2.mean_S2(vecs))
+    print(f"mean of {N} projection directions:\n", mean_S2(vecs))

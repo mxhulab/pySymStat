@@ -1,76 +1,96 @@
-__all__ = ['euler_to_quaternion',
-           'quaternion_to_euler']
-
-# src[0] -> AngleRot
-# src[1] -> AngleTilt
-# src[2] -> AnglePsi
-
-import math
 import numpy as np
-
 from numpy.typing import NDArray
 
-# src[0] -> AngleRot
-# src[1] -> AngleTilt
-# src[2] -> AnglePsi
+def euler_to_quat(angle : NDArray[np.float64]) -> NDArray[np.float64]:
+    '''Convert spatial rotation in Euler angles form to unit quaternion form.
 
-def euler_to_quaternion(src : NDArray[np.float64]) -> NDArray[np.float64]:
+    For more details, visit [RELION Conventions](https://relion.readthedocs.io/en/release-3.1/Reference/Conventions.html#orientations).
+
+    Parameters
+    ----------
+    angle : array of shape (3, ...)
+        Spatial rotations in Euler angles form.
+
+    Returns
+    -------
+    q : array of shape (4, ...)
+        Spatial rotations in unit quaternion form.
     '''
-    The `euler_to_quaternion` function converts Euler angles (Relion's convention) to a unit quaternion.
-    - `src`: This is a Numpy vector of type `np.float64` with a length of 3, representing `rlnAngleRot`, `rlnAngleTilt`, and `rlnAnglePsi` in Relion's starfile convention.
+    assert angle.shape[0] == 3
+    q = np.empty((4, *angle.shape[1:]), dtype = np.float64)
+    angle = np.radians(angle)
+    q[0] =  np.cos((angle[2] + angle[0]) / 2) * np.cos(angle[1] / 2)
+    q[1] = -np.sin((angle[2] - angle[0]) / 2) * np.sin(angle[1] / 2)
+    q[2] = -np.cos((angle[2] - angle[0]) / 2) * np.sin(angle[1] / 2)
+    q[3] = -np.sin((angle[2] + angle[0]) / 2) * np.cos(angle[1] / 2)
+    return q
+
+def quat_to_euler(q : NDArray[np.float64]) -> NDArray[np.float64]:
+    '''Convert spatial rotation in unit quaternion form to Euler angles form.
+
+    For more details, visit [RELION Conventions](https://relion.readthedocs.io/en/release-3.1/Reference/Conventions.html#orientations).
+
+    Parameters
+    ----------
+    q : array of shape (4, ...)
+        Spatial rotations in unit quaternion form.
+
+    Returns
+    -------
+    angle : array of shape (3, ...)
+        Spatial rotations in Euler angles form.
     '''
-    psi = math.radians(src[0])
-    theta = math.radians(src[1])
-    phi = math.radians(src[2])
+    assert q.shape[0] == 4
+    angle = np.empty((3, *q.shape[1:]), dtype = np.float64)
+    angle[1] = np.arctan2(np.hypot(q[1], q[2]), np.hypot(q[0], q[3])) * 2
+    s = np.arctan2(-q[3],  q[0])
+    m = np.arctan2(-q[1], -q[2])
+    angle[0] = s - m
+    angle[2] = s + m
+    angle[0] = np.remainder(angle[0] + np.pi, 2 * np.pi) - np.pi
+    angle[2] = np.remainder(angle[2] + np.pi, 2 * np.pi) - np.pi
+    return np.degrees(angle)
 
-    w = math.cos((phi + psi) / 2) * math.cos(theta / 2)
-    x = math.sin((phi - psi) / 2) * math.sin(theta / 2)
-    y = math.cos((phi - psi) / 2) * math.sin(theta / 2)
-    z = math.sin((phi + psi) / 2) * math.cos(theta / 2)
+def euler_to_vec(angle : NDArray[np.float64]) -> NDArray[np.float64]:
+    '''Convert projection direction in Euler angles form to unit vector form.
 
-    return np.array([w, x, y, z], dtype = np.float64)
+    For more details, visit [RELION Conventions](https://relion.readthedocs.io/en/release-3.1/Reference/Conventions.html#orientations).
 
-def quaternion_to_euler(src : NDArray[np.float64]) -> NDArray[np.float64]:
+    Parameters
+    ----------
+    angle : array of shape (2, ...)
+        Projection directions in Euler angles form.
+
+    Returns
+    -------
+    v : array of shape (3, ...)
+        Projection directions in unit vector form.
     '''
-    The `quaternion_to_euler` function converts a unit quaternion to Euler angles (Relion's convention).
-    - `src`: This is a Numpy vector of type `np.float64` with a length of 4, which is a quaternion representing a spatial rotation.
+    assert angle.shape[0] == 2
+    v = np.empty((3, *angle.shape[1:]), dtype = np.float64)
+    angle = np.radians(angle)
+    v[0] = np.sin(angle[1]) * np.cos(angle[0])
+    v[1] = np.sin(angle[1]) * np.sin(angle[0])
+    v[2] = np.cos(angle[1])
+    return v
+
+def vec_to_euler(v : NDArray[np.float64]) -> NDArray[np.float64]:
+    '''Convert spatial rotation in unit vector form to Euler angles form.
+
+    For more details, visit [RELION Conventions](https://relion.readthedocs.io/en/release-3.1/Reference/Conventions.html#orientations).
+
+    Parameters
+    ----------
+    v : array of shape (3, ...)
+        Spatial rotations in unit quaternion form.
+
+    Returns
+    -------
+    angle : array of shape (2, ...)
+        Spatial rotations in Euler angles form.
     '''
-    FLT_EPSILON = 1.19209*10**(-7)
-
-    # mat : rotation matrix
-    A = np.zeros((3,3))
-    A[0,1] = -src[3]
-    A[1,0] =  src[3]
-    A[0,2] =  src[2]
-    A[2,0] = -src[2]
-    A[1,2] = -src[1]
-    A[2,1] =  src[1]
-
-    mat = np.eye(3) + 2 * src[0] * A + 2 * np.dot(A, A)
-    mat = np.transpose(mat)
-
-    if (abs(mat[1, 1]) > FLT_EPSILON):
-        abs_sb = math.sqrt((-mat[2, 2] * mat[1, 2] * mat[2, 1] \
-               - mat[0, 2] * mat[2, 0]) / mat[1, 1])
-    elif (abs(mat[0, 1]) > FLT_EPSILON):
-        abs_sb = math.sqrt((-mat[2, 1] * mat[2, 2] * mat[0, 2] + mat[2, 0] * mat[1, 2]) / mat[0, 1])
-    elif (abs(mat[0, 0]) > FLT_EPSILON):
-        abs_sb = math.sqrt((-mat[2, 0] * mat[2, 2] * mat[0, 2] - mat[2, 1] * mat[1, 2]) / mat[0, 0])
-    else:
-        print("Don't know how to extract angles.")
-        exit()
-
-    if (abs_sb > FLT_EPSILON):
-        beta  = math.atan2(abs_sb, mat[2, 2])
-        alpha = math.atan2(mat[2, 1] / abs_sb, mat[2, 0] / abs_sb)
-        gamma = math.atan2(mat[1, 2] / abs_sb, -mat[0, 2] / abs_sb)
-    else:
-        alpha = 0
-        beta  = 0
-        gamma = math.atan2(mat[1, 0], mat[0, 0])
-
-    gamma = math.degrees(gamma)
-    beta  = math.degrees(beta)
-    alpha = math.degrees(alpha)
-
-    return np.array([alpha, beta, gamma], dtype = np.float64)
+    assert v.shape[0] == 3
+    angle = np.empty((2, *v.shape[1:]), dtype = np.float64)
+    angle[0] = np.arctan2(v[1], v[0])
+    angle[1] = np.arctan2(np.hypot(v[0], v[1]), v[2])
+    return np.degrees(angle)
