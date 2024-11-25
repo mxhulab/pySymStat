@@ -2,9 +2,7 @@ import argparse
 import numpy as np
 from itertools import product
 from math import *
-
-from pySymStat import get_sym_grp, mean_SO3, variance_SO3, mean_S2, variance_S2
-from pySymStat.quaternion import quat_mult, quat_rotate, quat_conj
+from pySymStat import get_grp_info, mean_SO3, variance_SO3, mean_S2, variance_S2, action_SO3, action_S2
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description = 'Test program of pySymStat.')
@@ -12,15 +10,14 @@ if __name__ == '__main__':
     parser.add_argument('group',                          help = 'the symmetry group.')
     args = parser.parse_args()
 
-    d = 3 if args.space == 'S2' else 4
+    d = 4 if args.space == 'SO3' else 3
     dataset = np.load(f'data/{args.space}.npy')
-    sym_grp_info  = get_sym_grp(args.group)
-    sym_grp_elems = sym_grp_info[0]
+    sym_grp_elems = get_grp_info(args.group)[0]
     n_test = 1000
     n_size = ceil(log(1000, len(sym_grp_elems))) + 1
-    grp_action    = quat_mult     if d == 4 else lambda v, q: quat_rotate(quat_conj(q), v)
-    mean_func     = mean_SO3      if d == 4 else mean_S2
-    variance_func = variance_SO3  if d == 4 else variance_S2
+    grp_action    = action_SO3   if d == 4 else action_S2
+    mean_func     = mean_SO3     if d == 4 else mean_S2
+    variance_func = variance_SO3 if d == 4 else variance_S2
 
     # Compute optimal solutions for original problems by brute-force enumeration.
     # Only available for arithmetic distance.

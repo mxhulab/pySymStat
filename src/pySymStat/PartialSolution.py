@@ -1,21 +1,21 @@
 __all__ = [
-    'Partial_Solution'
+    'PartialSolution'
 ]
 
 import numpy as np
 from itertools import product
 
-class Partial_Solution(object):
-    '''
-    A partial solution is a weighted disjoint union set.
+class PartialSolution(object):
+    '''Partial solution class.
+
+    It is implemented as a weighted disjoint union set.
     The weights are group elements.
     If i, j are connected, then the weight w[i]*w[j]^{-1} is g_i*g_j^{-1}.
     '''
-
-    def __init__(self, n, grp_table, grp_inv_table, f):
+    def __init__(self, n, g_table, i_table, f):
         self.n = n
-        self.grp_table = grp_table
-        self.grp_inv_table = grp_inv_table
+        self.g_table = g_table
+        self.i_table = i_table
         self.f = f
 
         self.fathers = np.arange(0, n, dtype = np.int32)
@@ -28,7 +28,7 @@ class Partial_Solution(object):
         else:
             fi = self.fathers[i]
             self.fathers[i] = self.get_father(fi)
-            self.weights[i] = self.grp_table[self.weights[i], self.weights[fi]]
+            self.weights[i] = self.g_table[self.weights[i], self.weights[fi]]
             return self.fathers[i]
 
     def is_connected(self, i, j):
@@ -39,7 +39,7 @@ class Partial_Solution(object):
         fi = self.get_father(i)
         fj = self.get_father(j)
         assert fi == fj
-        return self.grp_table[self.weights[i], self.grp_inv_table[self.weights[j]]]
+        return self.g_table[self.weights[i], self.i_table[self.weights[j]]]
 
     # Add a relation g[i]*g[j]^{-1} = g.
     def add_relation(self, i, j, g):
@@ -50,13 +50,13 @@ class Partial_Solution(object):
         conn_i = [k for k in range(self.n) if self.is_connected(i, k)]
         conn_j = [k for k in range(self.n) if self.is_connected(j, k)]
         self.fathers[fi] = fj
-        self.weights[fi] = self.grp_table[self.grp_table[self.grp_inv_table[self.weights[i]], g], self.weights[j]]
+        self.weights[fi] = self.g_table[self.g_table[self.i_table[self.weights[i]], g], self.weights[j]]
         for ii, jj in product(conn_i, conn_j):
-            self.cost += self.f[ii, jj, self.get_weight(ii, jj)]
-            self.cost += self.f[jj, ii, self.get_weight(jj, ii)]
+            self.cost += self.f[self.get_weight(ii, jj), ii, jj]
+            self.cost += self.f[self.get_weight(jj, ii), jj, ii]
 
     def copy(self):
-        new_ps = Partial_Solution(self.n, self.grp_table, self.grp_inv_table, self.f)
+        new_ps = PartialSolution(self.n, self.g_table, self.i_table, self.f)
         new_ps.fathers[:] = self.fathers
         new_ps.weights[:] = self.weights
         new_ps.cost = self.cost

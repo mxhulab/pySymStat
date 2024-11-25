@@ -5,8 +5,7 @@ __all__ = [
 import numpy as np
 
 class Leaderboard(object):
-    '''
-    A fixed capacity leader board data structure.
+    '''A fixed capacity leader board data structure.
 
     It is a binary heap with fixed capacity, and automatically pop the elements
     with largest cost.
@@ -58,4 +57,5 @@ if __name__ == '__main__':
         Q.push(i)
         print(Q.size, Q.data)
 
-    while not Q.empty(): print(Q.pop(), end = ' ')
+    while not Q.empty():
+        print(Q.pop(), end = ' ')

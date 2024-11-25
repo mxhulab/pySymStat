@@ -1,62 +1,70 @@
-__all__ = [
-    'quat_norm', # hide this
-    'quat_conj',
-    'quat_mult',
-    'quat_same', # hide this
-    'quat_rotate'
-]
-
 import numpy as np
-
 from numpy.typing import NDArray
 
+def quat_mult(q1 : NDArray[np.float64], q2 : NDArray[np.float64]) -> NDArray[np.float64]:
+    '''Product of two quaternions.
+
+    Parameters
+    ----------
+    q1 : array of shape (4, ...)
+    q1 : array of shape (4, ...)
+
+    Returns
+    -------
+    q : q1 * q2
+    '''
+    assert q1.shape[0] == q2.shape[0] == 4
+    return np.array([
+        q1[0] * q2[0] - q1[1] * q2[1] - q1[2] * q2[2] - q1[3] * q2[3],
+        q1[0] * q2[1] + q1[1] * q2[0] + q1[2] * q2[3] - q1[3] * q2[2],
+        q1[0] * q2[2] - q1[1] * q2[3] + q1[2] * q2[0] + q1[3] * q2[1],
+        q1[0] * q2[3] + q1[1] * q2[2] - q1[2] * q2[1] + q1[3] * q2[0]
+    ], dtype = np.float64)
+
 def quat_norm(q : NDArray[np.float64]) -> float:
-    return np.linalg.norm(q)
+    '''Norm of a quaternion.
+    '''
+    assert q.shape[0] == 4
+    return np.linalg.norm(q, axis = 0)
+
+def quat_norm2(q : NDArray[np.float64]) -> np.float64:
+    '''Square norm of a quaternion.
+    '''
+    assert q.shape[0] == 4
+    return np.sum(q ** 2, axis = 0)
 
 def quat_conj(q : NDArray[np.float64]) -> NDArray[np.float64]:
+    '''Conjugation of a quaternion.
     '''
-    The `quat_conj` functions calculates the conjugate of an input quaternion.
-    - `q`: This is a quaternion and should be a NumPy vector of type `np.float64` with a length of 4.
-    '''
-    return q * np.array([1, -1, -1, -1])
+    assert q.shape[0] == 4
+    q_conj = q.copy()
+    q_conj[1:] *= -1
+    return q_conj
 
-def quat_mult(
-    q1 : NDArray[np.float64],
-    q2 : NDArray[np.float64]
-) -> NDArray[np.float64]:
+def quat_inv(q : NDArray[np.float64]) -> NDArray[np.float64]:
+    '''Inverse of a quaternion.
     '''
-    The `quat_mult` functions calculates the product of two input quaternions.
-    - `q1` and `q2`: This are two quaternions and should be NumPy vectors of type `np.float64` with a length of 4.
-    '''
-    w1, x1, y1, z1 = q1
-    w2, x2, y2, z2 = q2
-    return np.array([w1 * w2 - x1 * x2 - y1 * y2 - z1 * z2,
-                     w1 * x2 + x1 * w2 + y1 * z2 - z1 * y2,
-                     w1 * y2 - x1 * z2 + y1 * w2 + z1 * x2,
-                     w1 * z2 + x1 * y2 - y1 * x2 + z1 * w2], dtype = np.float64)
+    assert q.shape[0] == 4
+    return quat_conj(q) / quat_norm2(q)
 
-def quat_same(
-    q1 : NDArray[np.float64],
-    q2 : NDArray[np.float64],
-    eps : float = 1e-3
-) -> bool:
-    return np.linalg.norm(q1 - q2) < eps or np.linalg.norm(q1 + q2) < eps
+def quat_rotate(q : NDArray[np.float64], v : NDArray[np.float64]) -> NDArray[np.float64]:
+    '''Rotate a vector by a quaternion.
 
-def quat_rotate(
-    q : NDArray[np.float64], 
-    v : NDArray[np.float64]
-) -> NDArray[np.float64]:
+    Parameters
+    ----------
+    q : array of shape (4, ...)
+    v : array of shape (3, ...)
+
+    Returns
+    -------
+    Rotate(q)v : array of shape (3, ...)
     '''
-    The `quat_rotate` functions rotate this a vector based on a spatial rotation represented by a unit quarternion.
-    - `q`: This is a quaternion and should be a NumPy vector of type `np.float64` with a length of 4. It represents the spatial rotation.
-    - `v`: This is a vector in 3D space, which to be rotated.
-    '''
-    v = np.array([0, v[0], v[1], v[2]], dtype = np.float64)
-    qv = quat_mult(quat_mult(q, v), quat_conj(q))
-    return qv[1:]
+    assert q.shape[0] == 4 and v.shape[0] == 3
+    w = np.empty((4, *v.shape[1:]), dtype = np.float64)
+    w[0], w[1:] = 0, v
+    return quat_mult(quat_mult(q, w), quat_inv(q))[1:]
 
 if __name__ == '__main__':
-
     q1 = np.random.randn(4)
     q1 /= np.linalg.norm(q1)
     q2 = np.random.randn(4)
@@ -65,9 +73,23 @@ if __name__ == '__main__':
     v = np.random.randn(3)
     v /= np.linalg.norm(v)
 
-    print(r'R_q v == R_{-q} v:',
-          np.allclose(quat_rotate(q1, v), quat_rotate(-q1, v)))
-    print(r'R_{conj(q)} R_q v == v:',
-          np.allclose(quat_rotate(quat_conj(q1), quat_rotate(q1, v)), v))
-    print(r'R_{q1} R_{q2} v == R_{q1 q2}v:',
-          np.allclose(quat_rotate(q1, quat_rotate(q2, v)), quat_rotate(quat_mult(q1, q2), v)))
+    print('q1 =', q1)
+    print('q2 =', q2)
+    print('q1 * q2 =', quat_mult(q1, q2))
+    print('norm(q1) =', quat_norm(q1))
+    print('conj(q1) =', quat_conj(q1))
+    print('inv(q1) =', quat_inv(q1))
+
+    v1 = quat_rotate(q1, v)
+    v2 = quat_rotate(-q1, v)
+    v3 = quat_rotate(quat_conj(q1), v1)
+    print('rotate(q1)v =', v1)
+    print('rotate(-q1)v =', v2)
+    assert np.allclose(v1, v2)
+    assert np.allclose(v, v3)
+
+    v4 = quat_rotate(q2, v1)
+    v5 = quat_rotate(quat_mult(q2, q1), v)
+    print('rotate(q2)rotate(q1)v =', v4)
+    print('rotate(q2 * q1)v =', v5)
+    assert np.allclose(v4, v5)

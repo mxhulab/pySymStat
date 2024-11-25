@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pysymstat"
-version = "1.3"
+version = "1.4"
 authors = [
     { name="Qi Zhang", email="q-zhang20@mails.tsinghua.edu.cn" },
     { name="Mingxu Hu", email="humingxu@smart.org.cn" },
@@ -15,8 +15,11 @@ readme = "README.md"
 license = {file = "LICENSE"}
 requires-python = ">=3.7"
 dependencies = [
-    "numpy>=1.18",
+    "numpy>=1.18,<2",
     "picos>=2.4.12",
+    "starfile>=0.4.1,<0.5",
+    "pandas<2.2",
+    "rich"
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -28,3 +31,6 @@ classifiers = [
 
 [project.urls]
 "Homepage" = "https://github.com/mxhulab/pySymStat"
+
+[project.scripts]
+"localize" = "pySymStat.localize:main"
